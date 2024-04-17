@@ -11,6 +11,7 @@ const HomePage = () => {
       <Slide />
       <Categories />
       <Listings />
+      <div>Are you working or not?</div>
       <Footer />
     </>
   );
