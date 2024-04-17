@@ -33,7 +33,7 @@ const Listings = () => {
     };
 
     getFeedListings();
-  }, [dispatch, selectedCategory]);
+  }, [selectedCategory]);
 
   return (
     <>

@@ -93,35 +93,44 @@ const ListingCard = ({
           className="slider"
           style={{ transform: `translateX(-${curIndex * 100}%)` }}
         >
-          {listingPhotoPaths?.map((photo, index) => (
-            <div key={index} className="slide">
-              <img
-                src={`${import.meta.env.VITE_APP_SERVER_URL}/${photo.replace(
-                  "public",
-                  ""
-                )}`}
-                alt={`photo ${index + 1}`}
-              />
-              <div
-                className="prev-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goToPrevSlide();
-                }}
-              >
-                <ArrowBackIosNew sx={{ fontSize: "15px" }} />
+          {listingPhotoPaths?.map((photo, index) => {
+            const imgURL = `${import.meta.env.VITE_APP_SERVER_URL}/${photo
+              .replace("public\\", "")
+              .replace("\\", "/")}`;
+
+            console.log(imgURL);
+
+            return (
+              <div key={index} className="slide">
+                <img
+                  // src={`${import.meta.env.VITE_APP_SERVER_URL}/${photo.replace(
+                  //   "public\\",
+                  //   ""
+                  // )}`}
+                  src={imgURL}
+                  alt={`photo ${index + 1}`}
+                />
+                <div
+                  className="prev-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goToPrevSlide();
+                  }}
+                >
+                  <ArrowBackIosNew sx={{ fontSize: "15px" }} />
+                </div>
+                <div
+                  className="next-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goToNextSlide();
+                  }}
+                >
+                  <ArrowForwardIos sx={{ fontSize: "15px" }} />
+                </div>
               </div>
-              <div
-                className="next-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goToNextSlide();
-                }}
-              >
-                <ArrowForwardIos sx={{ fontSize: "15px" }} />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

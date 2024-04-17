@@ -40,6 +40,7 @@ const ListingDetails = () => {
 
   const start = new Date(dateRange[0].startDate);
   const end = new Date(dateRange[0].endDate);
+  const now = new Date();
 
   const dayCount = Math.round(+end - +start) / (1000 * 60 * 60 * 24);
 
@@ -52,9 +53,16 @@ const ListingDetails = () => {
       toast.error("Kindly login to create a booking.");
       return;
     }
-
     if (customerId === listing?.creator._id) {
       toast.error("You can't make a booking of your own listing.");
+      return;
+    }
+    if (dayCount === 0) {
+      toast.error("Please indicate your stay duration.");
+      return;
+    }
+    if (+start - +now < -86000000) {
+      toast.error("Wrong duration input. Please correct your stay duration.");
       return;
     }
 

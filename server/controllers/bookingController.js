@@ -27,5 +27,3 @@ exports.createBooking = async (req, res) => {
     });
   }
 };
-
-// exports.getBooking = async (req, res) => {};
