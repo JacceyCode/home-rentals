@@ -25,15 +25,17 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    const { name, value, files } = e.target as HTMLInputElement;
+    const { name, value, files } = e.target;
+
+    const newValue =
+      name === "profileImage" && files && files[0] ? files[0] : value;
 
     setFormData({
       ...formData,
-      [name]: value,
-      [name]: name === "profileImage" && files! ? files[0] : value,
+      [name]: newValue,
     });
   };
 
@@ -44,14 +46,14 @@ const RegisterPage = () => {
     );
   }, [formData.confirmPassword, formData.password]);
 
-  const handleSUbmit = async (e: FormEvent) => {
+  const handleSUbmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const register_form = new FormData();
-      for (const key in formData) {
-        register_form.append(key, formData[key]);
-      }
+      Object.entries(formData).forEach(([key, value]) => {
+        register_form.append(key, value as string);
+      });
 
       const res = await fetch(
         `${import.meta.env.VITE_APP_SERVER_URL}/auth/register`,
@@ -66,6 +68,8 @@ const RegisterPage = () => {
       if (res.ok) {
         navigate("/login");
         toast.success("User registration successful! Kindly sign in.");
+      } else {
+        toast.error("Error signing up user! Please try again.");
       }
     } catch (err) {
       console.log(err);

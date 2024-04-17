@@ -19,6 +19,7 @@ export type DescriptionProps = {
 };
 
 export type ListingFormProps = {
+  [key: string]: string | number | string[];
   creator: string;
   category: string;
   type: string;

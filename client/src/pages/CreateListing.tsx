@@ -134,7 +134,7 @@ const CreateListing = () => {
 
       const listingFormData = new FormData();
       for (const key in listingForm) {
-        listingFormData.append(key, listingForm[key]);
+        listingFormData.append(key, listingForm[key] as string);
       }
       // Append each selected photos to the FormData object
       photos.map((photo) => listingFormData.append("listingPhotos", photo));
