@@ -14,6 +14,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
+    origin: "https://vacation-home-rental-three.vercel.app",
   })
 );
 app.use(express.json());

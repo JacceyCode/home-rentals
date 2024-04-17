@@ -98,8 +98,6 @@ const ListingCard = ({
               .replace("public\\", "")
               .replace("\\", "/")}`;
 
-            console.log(imgURL);
-
             return (
               <div key={index} className="slide">
                 <img
