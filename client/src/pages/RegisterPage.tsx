@@ -62,15 +62,17 @@ const RegisterPage = () => {
           body: register_form,
         }
       );
+      console.log(res);
 
       await res.json();
 
       if (res.ok) {
         navigate("/login");
         toast.success("User registration successful! Kindly sign in.");
-      } else {
-        toast.error("Error signing up user! Please try again.");
       }
+      // } else {
+      //   toast.error("Error signing up user! Please try again.");
+      // }
     } catch (err) {
       console.log(err);
       toast.error("Error signing up user! Please try again.");
