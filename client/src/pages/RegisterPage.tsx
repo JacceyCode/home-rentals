@@ -62,7 +62,6 @@ const RegisterPage = () => {
           body: register_form,
         }
       );
-      console.log(res);
 
       await res.json();
 

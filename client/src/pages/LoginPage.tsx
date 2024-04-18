@@ -42,6 +42,7 @@ const LoginPage = () => {
       // console.log("JWT token:", jwtoken);
 
       const data = await response.json();
+
       if (response.ok) {
         dispatch(
           setLogin({
@@ -51,9 +52,11 @@ const LoginPage = () => {
         );
         toast.success("Login successful!");
         navigate("/");
+      } else {
+        throw new Error(data.message);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error("User login failed.");
     }
   };
@@ -81,6 +84,7 @@ const LoginPage = () => {
           <button type="submit">LOG IN</button>
         </form>
         <Link to="/register">Don't have an account? Sign up here.</Link>
+        <Link to="/">Go to Homepage</Link>
       </section>
     </section>
   );

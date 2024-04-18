@@ -8,14 +8,14 @@ const User = require("../models/UserModel");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/"); //store uploaded files in the uploads folder
+    cb(null, "public/uploads"); //store uploaded files in the uploads folder
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); // use the original file name
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 exports.uploadProfileImage = upload.single("profileImage");
 
@@ -23,14 +23,14 @@ exports.createUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
-    const profileImage = req.file;
+    // const profileImage = req.file;
 
     // if (!profileImage) {
     //   return res.status(400).json("No profile image uploaded");
     // }
 
     // path to the uploaded image
-    const profileImagePath = profileImage?.path;
+    const profileImagePath = `uploads/${req.file.originalname}`;
 
     const newUser = await User.create({
       firstName,

@@ -14,12 +14,11 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    // origin: "https://vacation-home-rental-three.vercel.app",
   })
 );
+app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static("public"));
 
 app.use("/auth", userRoutes);
 app.use("/properties", listingRoutes);

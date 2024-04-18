@@ -111,10 +111,7 @@ const ListingDetails = () => {
         <div className="photos">
           {listing?.listingPhotoPaths.map((photo, index) => (
             <img
-              src={`${import.meta.env.VITE_APP_SERVER_URL}/${photo.replace(
-                "public",
-                ""
-              )}`}
+              src={`${import.meta.env.VITE_APP_SERVER_URL}/${photo}`}
               alt="listing photo"
               key={index}
             />
@@ -133,9 +130,9 @@ const ListingDetails = () => {
 
         <div className="profile">
           <img
-            src={`${
-              import.meta.env.VITE_APP_SERVER_URL
-            }/${listing?.creator.profileImagePath.replace("public", "")}`}
+            src={`${import.meta.env.VITE_APP_SERVER_URL}/${
+              listing?.creator.profileImagePath
+            }`}
             alt=""
           />
           <h3>

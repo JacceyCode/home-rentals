@@ -94,9 +94,7 @@ const ListingCard = ({
           style={{ transform: `translateX(-${curIndex * 100}%)` }}
         >
           {listingPhotoPaths?.map((photo, index) => {
-            const imgURL = `${import.meta.env.VITE_APP_SERVER_URL}/${photo
-              .replace("public\\", "")
-              .replace("\\", "/")}`;
+            const imgURL = `${import.meta.env.VITE_APP_SERVER_URL}/${photo}`;
 
             return (
               <div key={index} className="slide">

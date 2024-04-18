@@ -23,6 +23,7 @@ import {
 } from "../types/create-listing";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import { toast } from "react-toastify";
 
 const CreateListing = () => {
   const [category, setCategory] = useState<string>("");
@@ -140,7 +141,6 @@ const CreateListing = () => {
       photos.map((photo) => listingFormData.append("listingPhotos", photo));
 
       // Send a post request to server
-
       const response = await fetch(
         `${import.meta.env.VITE_APP_SERVER_URL}/properties/create`,
         {
@@ -148,13 +148,16 @@ const CreateListing = () => {
           body: listingFormData,
         }
       );
-      if (!response.ok) throw Error();
-      await response.json();
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message);
+
       if (response.ok) {
+        toast.success("Rental listing updated successfully.");
         navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      toast.error("Failed to update rental listing. Please try again.");
     }
   };
 

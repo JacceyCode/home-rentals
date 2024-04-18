@@ -1,19 +1,22 @@
 const multer = require("multer");
+const sharp = require("sharp");
 
 const Listing = require("../models/ListingModel");
 
 // multer configuration for photo upload
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/uploads/"); //store uploaded files in the uploads folder
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); // use the original file name
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "public/uploads"); //store uploaded files in the uploads folder
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname); // use the original file name
+//   },
+// });
 
-const upload = multer({ storage });
+const multerStorage = multer.memoryStorage();
+
+const upload = multer({ storage: multerStorage });
 
 exports.uploadListingPhotos = upload.array("listingPhotos");
 
@@ -42,11 +45,23 @@ exports.createListing = async (req, res) => {
     } = req.body;
 
     const listingPhotos = req.files;
-    if (!listingPhotos) {
-      return res.status(400).send("No images uploaded.");
+    if (listingPhotos.length === 0) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No images uploaded",
+      });
     }
 
-    const listingPhotoPaths = listingPhotos.map((file) => file.path);
+    listingPhotos.map(
+      async (file) =>
+        await sharp(file.buffer)
+          .resize(500, 500)
+          .toFile(`public/uploads/${file.originalname}`)
+    );
+
+    const listingPhotoPaths = listingPhotos.map(
+      (file) => `uploads/${file.originalname}`
+    );
 
     const newListing = await Listing.create({
       creator,
