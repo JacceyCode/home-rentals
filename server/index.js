@@ -29,6 +29,7 @@ app.use("/users", tripRoutes);
 // DB SETUP
 const DB = process.env.DB_URL.replace("<password>", process.env.DB_PASSWORD);
 const port = process.env.PORT || 5000;
+
 mongoose
   .connect(DB)
   .then(() =>
