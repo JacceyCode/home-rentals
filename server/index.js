@@ -14,7 +14,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    // origin: "https://home-rentals-henna.vercel.app",
+    origin: "https://home-rentals-henna.vercel.app",
   })
 );
 app.use(express.static("public"));
