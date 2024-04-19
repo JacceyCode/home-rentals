@@ -26,6 +26,7 @@ import Footer from "../components/Footer";
 import { toast } from "react-toastify";
 
 const CreateListing = () => {
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [photos, setPhotos] = useState([] as PhotosProp);
@@ -109,7 +110,7 @@ const CreateListing = () => {
 
   const handlePost = async (e: FormEvent) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       // create a new form data object
       const listingForm: ListingFormProps = {
@@ -158,6 +159,8 @@ const CreateListing = () => {
     } catch (err) {
       console.error(err);
       toast.error("Failed to update rental listing. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -527,8 +530,8 @@ const CreateListing = () => {
             </div>
           </div>
 
-          <button type="submit" className="submit_btn">
-            CREATE YOUR LISTING
+          <button type="submit" className="submit_btn" disabled={loading}>
+            {loading ? "Loading..." : "CREATE YOUR LISTING"}
           </button>
         </form>
       </section>

@@ -1,22 +1,20 @@
 const multer = require("multer");
-const sharp = require("sharp");
 
 const Listing = require("../models/ListingModel");
+const { cloudinary } = require("../utils/cloudinary");
 
 // multer configuration for photo upload
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "public/uploads"); //store uploaded files in the uploads folder
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname); // use the original file name
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads"); //store uploaded files in the uploads folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // use the original file name
+  },
+});
 
-const multerStorage = multer.memoryStorage();
-
-const upload = multer({ storage: multerStorage });
+const upload = multer({ storage });
 
 exports.uploadListingPhotos = upload.array("listingPhotos");
 
@@ -52,16 +50,18 @@ exports.createListing = async (req, res) => {
       });
     }
 
-    listingPhotos.map(
-      async (file) =>
-        await sharp(file.buffer)
-          .resize(500, 500)
-          .toFile(`public/uploads/${file.originalname}`)
-    );
+    const listingPhotoPaths = [];
 
-    const listingPhotoPaths = listingPhotos.map(
-      (file) => `uploads/${file.originalname}`
-    );
+    for (const photo of listingPhotos) {
+      const uploadedListingImage = await cloudinary.uploader.upload(
+        photo.path,
+        {
+          upload_preset: "home_rentals",
+        }
+      );
+
+      listingPhotoPaths.push(uploadedListingImage.secure_url);
+    }
 
     const newListing = await Listing.create({
       creator,

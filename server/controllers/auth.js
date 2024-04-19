@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 
 const User = require("../models/UserModel");
+const { cloudinary } = require("../utils/cloudinary");
 
 // multer configuration for file upload
 
@@ -23,14 +24,18 @@ exports.createUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
-    // const profileImage = req.file;
+    const profileImage = req.file;
 
-    // if (!profileImage) {
-    //   return res.status(400).json("No profile image uploaded");
-    // }
+    if (!profileImage) {
+      return res.status(400).json("No profile image uploaded");
+    }
 
-    // path to the uploaded image
-    const profileImagePath = `uploads/${req.file.originalname}`;
+    const uploadedProfileImage = await cloudinary.uploader.upload(
+      profileImage.path,
+      {
+        upload_preset: "home_rentals",
+      }
+    );
 
     const newUser = await User.create({
       firstName,
@@ -38,7 +43,7 @@ exports.createUser = async (req, res) => {
       email,
       password,
       confirmPassword,
-      profileImagePath,
+      profileImagePath: uploadedProfileImage.secure_url,
     });
 
     newUser.password = undefined;

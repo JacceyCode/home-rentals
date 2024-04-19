@@ -73,9 +73,7 @@ const Navbar = () => {
             <Person sx={{ color: "#969393" }} />
           ) : (
             <img
-              src={`${import.meta.env.VITE_APP_SERVER_URL}/${
-                user.profileImagePath
-              }`}
+              src={user.profileImagePath}
               alt="Profile Photo"
               style={{ objectFit: "cover", borderRadius: "50%" }}
             />

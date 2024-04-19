@@ -13,6 +13,7 @@ type UserData = {
 };
 
 const RegisterPage = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<UserData>({
     firstName: "",
     lastName: "",
@@ -48,7 +49,7 @@ const RegisterPage = () => {
 
   const handleSUbmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const register_form = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
@@ -75,6 +76,8 @@ const RegisterPage = () => {
     } catch (err) {
       console.log(err);
       toast.error("Error signing up user! Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -152,8 +155,8 @@ const RegisterPage = () => {
             />
           )}
 
-          <button type="submit" disabled={!passwordMatch}>
-            REGISTER
+          <button type="submit" disabled={!passwordMatch || loading}>
+            {loading ? "Loading..." : "REGISTER"}
           </button>
         </form>
 

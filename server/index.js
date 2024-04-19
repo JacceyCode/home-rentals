@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const userRoutes = require("./routes/userRoute");
 const listingRoutes = require("./routes/listingRoute");
@@ -14,7 +14,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    // origin: "https://home-rentals-henna.vercel.app",
+    origin: "https://home-rentals-henna.vercel.app",
   })
 );
 app.use(express.static("public"));

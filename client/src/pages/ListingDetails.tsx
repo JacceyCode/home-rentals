@@ -110,11 +110,7 @@ const ListingDetails = () => {
         </div>
         <div className="photos">
           {listing?.listingPhotoPaths.map((photo, index) => (
-            <img
-              src={`${import.meta.env.VITE_APP_SERVER_URL}/${photo}`}
-              alt="listing photo"
-              key={index}
-            />
+            <img src={photo} alt="listing photo" key={index} />
           ))}
         </div>
 
@@ -129,12 +125,7 @@ const ListingDetails = () => {
         <hr />
 
         <div className="profile">
-          <img
-            src={`${import.meta.env.VITE_APP_SERVER_URL}/${
-              listing?.creator.profileImagePath
-            }`}
-            alt=""
-          />
+          <img src={listing?.creator.profileImagePath} alt="listing creator" />
           <h3>
             Hosted by {listing?.creator.firstName} {listing?.creator.lastName}
           </h3>
