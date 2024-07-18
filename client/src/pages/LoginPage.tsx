@@ -69,7 +69,7 @@ const LoginPage = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            placeholder="Email (Test - test@test.com)"
             required
           />
 
@@ -77,7 +77,7 @@ const LoginPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
+            placeholder="Password (Test - password)"
             required
           />
 

@@ -7,6 +7,7 @@ const AppLayout = () => {
     <section>
       <ScrollRestoration />
       <Outlet />
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
