@@ -161,6 +161,7 @@ const RegisterPage = () => {
         </form>
 
         <Link to="/login">Already have an account? Log in here.</Link>
+        <Link to="/">Go to Homepage</Link>
       </article>
     </section>
   );
